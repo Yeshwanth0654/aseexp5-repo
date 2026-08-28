@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check HTML files
+        run: |
+          echo "Checking HTML files..."
+          test -f login.html
+          test -f nav.html
+          echo "HTML files exist."
+
+      - name: Run basic tests
+        run: |
+          echo "Running tests..."
+          grep -q "Login" login.html
+          grep -q "My Cart" nav.html
+          grep -q "My Wishlist" nav.html
+          echo "All tests passed."
